@@ -3,9 +3,8 @@ package com.example.administrator.myapplication;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,10 +19,8 @@ import com.example.administrator.myapplication.fragment.FragmentOne;
 import com.example.administrator.myapplication.fragment.FragmentThree;
 import com.example.administrator.myapplication.fragment.FragmentTwo;
 import com.example.administrator.myapplication.fragment.PanadaFragment;
-import com.example.administrator.myapplication.utils.FragmentBuilder;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
@@ -54,21 +51,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void init() {
-
-    }
-
-    @Override
-    protected void initListener() {
-
-    }
-
-    @Override
-    protected void loadData() {
-
+    protected void initView() {
         checkPermission();
-        FragmentBuilder.getInstance().start(PanadaFragment.class).build();
+        changeFragment(PanadaFragment.class,R.id.contentGroup,false,null,true);
     }
+
+
     private void checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -81,27 +69,18 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.zongHeBtn:
-                FragmentBuilder.getInstance().start(PanadaFragment.class).build();
+                changeFragment(PanadaFragment.class,R.id.contentGroup,false,null,true);
                 break;
             case R.id.discoverBtn:
-                FragmentBuilder.getInstance().start(FragmentOne.class).build();
+                changeFragment(FragmentOne.class,R.id.contentGroup,false,null,true);
                 break;
             case R.id.mineBtn:
-                FragmentBuilder.getInstance().start(FragmentTwo.class).build();
+                changeFragment(FragmentTwo.class,R.id.contentGroup,false,null,true);
                 break;
             case R.id.dongTanBtn:
-                FragmentBuilder.getInstance().start(FragmentThree.class).build();
+                changeFragment(FragmentThree.class,R.id.contentGroup,false,null,true);
                 break;
         }
-    }
-
-
-    public View getTopGroup() {
-        return topGroup;
-    }
-
-    public View getBottomGroup() {
-        return bottomGroup;
     }
 
 
@@ -113,6 +92,25 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this,"授权成功",Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(this,"拒绝授权",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager.BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(
+                getSupportFragmentManager().getBackStackEntryCount() - 1);
+        String simpleName = entry.getName();
+        if ("FragmentOne".equals(simpleName) || "FragmentTwo".equals(simpleName)
+                || "FragmentThree".equals(simpleName) || "PanadaFragment".equals(simpleName)) {
+            finish();
+        } else {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStackImmediate();
+                String name = getSupportFragmentManager().getBackStackEntryAt(
+                        getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+
+            }
+
         }
     }
 }

@@ -11,23 +11,14 @@ import com.example.administrator.myapplication.base.BaseFragment;
  */
 
 public class FragmentThree extends BaseFragment {
+
     @Override
-    protected int layoutId() {
+    protected int getLayoutId() {
         return R.layout.fragment_three;
     }
 
     @Override
-    protected void initView(View view) {
-
-    }
-
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected void initListener() {
+    protected void init(View view) {
 
     }
 

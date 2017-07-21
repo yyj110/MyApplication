@@ -29,27 +29,18 @@ public class PanadaFragment extends BaseFragment {
     private PanadaFragmentAdapter adapter;
 
 
+
     @Override
-    protected int layoutId() {
+    protected int getLayoutId() {
         return R.layout.fragment_panada;
     }
 
     @Override
-    protected void initView(View view) {
-
-    }
-
-    @Override
-    protected void initData() {
+    protected void init(View view) {
         list = new ArrayList<>();
         panadaIhttp = new PanadaIhttpImpl();
         adapter = new PanadaFragmentAdapter(getContext(), list);
         mPanadaListView.setAdapter(adapter);
-    }
-
-    @Override
-    protected void initListener() {
-
     }
 
     @Override

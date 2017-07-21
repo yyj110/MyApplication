@@ -3,7 +3,6 @@ package com.example.administrator.myapplication;
 import android.app.Application;
 
 import com.example.administrator.myapplication.base.BaseActivity;
-import com.example.administrator.myapplication.base.BaseFragment;
 
 
 /**
@@ -13,6 +12,5 @@ import com.example.administrator.myapplication.base.BaseFragment;
 public class APP extends Application {
 
     public static BaseActivity activity;
-    public static BaseFragment lastFragment;
 
 }
